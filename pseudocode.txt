@@ -1,0 +1,17 @@
+Need to include all six dependencies in server.js
+
+PUBLIC FOLDER
+
+public should utilize bootstrap, front-end jquery
+
+Color scheme for html should be from #4 from this website: http://blog.visme.co/website-color-schemes/
+
+Front end jquery needs to have a post route for saving and deleting from mongo db with on-click events
+
+Needs to 
+
+
+
+
+
+
