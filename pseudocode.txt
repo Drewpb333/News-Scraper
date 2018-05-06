@@ -1,4 +1,12 @@
-Need to include all six dependencies in server.js
+SERVER
+
+Needs to include all six dependencies in server.js
+
+create instances/utilize all six dependencies
+
+connect to heroku with app.listen
+
+api routes?
 
 PUBLIC FOLDER
 
@@ -8,7 +16,16 @@ Color scheme for html should be from #4 from this website: http://blog.visme.co/
 
 Front end jquery needs to have a post route for saving and deleting from mongo db with on-click events
 
-Needs to 
+Needs to have a scrape button that uses a get route to retrieve json from server
+
+jquery then needs to append this into a div for each new article
+
+Models
+
+Article.js should have title, URL,and a summary properties  
+
+Article.js and Index.js Should be exported to index.js in Models
+
 
 
 
