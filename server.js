@@ -24,9 +24,32 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public"));
 
+//retrieves info from ESPN
+app.get("/scrape", function (req, res) {
+  axios.get("http://espn.com/").then(function (response) {
+    //utilize jQuery formatting server-side
+    var $ = cheerio.load(response.data);
+
+    var results = [];
+
+    $("div.headlineStack").each(function (i, element) {
+
+      var link = $(element).children().attr("href");
+      var title = $(element).children().text();
+
+      // Save these results in an object that we'll push into the results array we defined earlier
+      results.push({
+        title: title,
+        link: link
+      });
+    });
+
+    // Log the results once you've looped through each of the elements found with cheerio
+    console.log(results[0]['title']);
+  })
+})
 
 
-
-app.listen(PORT, function(){
-    console.log("Listening on PORT: " + PORT);
+app.listen(PORT, function () {
+  console.log("Listening on PORT: " + PORT);
 })
