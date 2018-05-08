@@ -28,13 +28,13 @@ app.use(express.static("public"));
 
 //retrieves info from ESPN
 app.get("/scrape", function (req, res) {
-  axios.get("https://nature.com/").then(function (response) {
+  axios.get("http://espn.com/").then(function (response) {
     //utilize jQuery formatting server-side
     var $ = cheerio.load(response.data);
 
     var results = [];
 
-    $(".background-white pb20").each(function (i, element) {
+    $(".headlineStack__listContainer").each(function (i, element) {
 
       var link = $(element).children().attr("href");
       var title = $(element).children().text();
@@ -53,6 +53,39 @@ app.get("/scrape", function (req, res) {
   })
 })
 
+
+axios.get("http://espn.com/").then(function (response) {
+    //utilize jQuery formatting server-side
+    var $ = cheerio.load(response.data);
+
+    var initialResults = [];
+
+    $("a").each(function (i, element) {
+
+      var link = $(element).attr("href");
+      var title = $(element).text();
+      // console.log(link);
+      // console.log(title);
+      // console.log(i + "/n-----------");
+      // Save these results in an object that we'll push into the results array we defined earlier
+      initialResults.push({
+        title: title,
+        link: link
+      });
+    });
+
+    var results = [];
+
+    for(var i = 75; i < 81; i++){
+      results.push(initialResults[i]);
+    }
+    results.forEach(function(num){
+      console.log(num.title);
+      console.log(num.link);
+    })
+    // Log the results once you've looped through each of the elements found with cheerio
+    // console.log("\n\------------" + results);
+  })
 
 app.listen(PORT, function () {
   console.log("Listening on PORT: " + PORT);
