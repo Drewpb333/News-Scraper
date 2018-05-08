@@ -28,13 +28,13 @@ app.use(express.static("public"));
 
 //retrieves info from ESPN
 app.get("/scrape", function (req, res) {
-  axios.get("http://espn.com/").then(function (response) {
+  axios.get("https://nature.com/").then(function (response) {
     //utilize jQuery formatting server-side
     var $ = cheerio.load(response.data);
 
     var results = [];
 
-    $(".headlineStack__listContainer").each(function (i, element) {
+    $(".background-white pb20").each(function (i, element) {
 
       var link = $(element).children().attr("href");
       var title = $(element).children().text();
