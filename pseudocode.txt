@@ -1,3 +1,11 @@
+5.7.2018
+
+LOOK UP object properties initializers
+
+modules import/exporte
+
+review ES6
+
 SERVER
 
 Needs to include all six dependencies in server.js
@@ -25,6 +33,8 @@ Models
 Article.js should have title, URL,and a summary properties  
 
 Article.js and Index.js Should be exported to index.js in Models
+
+
 
 
 

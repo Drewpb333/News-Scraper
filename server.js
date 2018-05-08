@@ -34,11 +34,13 @@ app.get("/scrape", function (req, res) {
 
     var results = [];
 
-    $("div.headlineStack").each(function (i, element) {
+    $(".headlineStack__listContainer").each(function (i, element) {
 
       var link = $(element).children().attr("href");
       var title = $(element).children().text();
-
+      console.log(link);
+      console.log(title);
+      console.log(i + "/n-----------");
       // Save these results in an object that we'll push into the results array we defined earlier
       results.push({
         title: title,
@@ -47,7 +49,7 @@ app.get("/scrape", function (req, res) {
     });
 
     // Log the results once you've looped through each of the elements found with cheerio
-    console.log(results[0]['title']);
+    console.log("\n\------------" + results);
   })
 })
 
