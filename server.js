@@ -34,58 +34,81 @@ app.get("/scrape", function (req, res) {
 
     var results = [];
 
-    $(".headlineStack__listContainer").each(function (i, element) {
+    $("a").each(function (i, element) {
 
-      var link = $(element).children().attr("href");
-      var title = $(element).children().text();
-      console.log(link);
-      console.log(title);
-      console.log(i + "/n-----------");
-      // Save these results in an object that we'll push into the results array we defined earlier
+      var link = "http://espn.com/" + $(element).attr("href");
+      var title = $(element).text();
       results.push({
         title: title,
         link: link
       });
     });
 
-    // Log the results once you've looped through each of the elements found with cheerio
-    console.log("\n\------------" + results);
+    //numbers for headline links in html
+    for (var i = 75; i < 81; i++) {
+      var result = results[i];
+      // Create a new Article using the `result` object built from scraping
+      db.Article.create(result)
+        .then(function (dbArticle) {
+          // View the added result in the console
+          console.log(dbArticle);
+        })
+        .catch(function (err) {
+          // If an error occurred, send it to the client
+          return res.json(err);
+        });
+    }
+
+    res.send("Scrape has been completed.")
   })
 })
 
-
-axios.get("http://espn.com/").then(function (response) {
-    //utilize jQuery formatting server-side
-    var $ = cheerio.load(response.data);
-
-    var initialResults = [];
-
-    $("a").each(function (i, element) {
-
-      var link = $(element).attr("href");
-      var title = $(element).text();
-      // console.log(link);
-      // console.log(title);
-      // console.log(i + "/n-----------");
-      // Save these results in an object that we'll push into the results array we defined earlier
-      initialResults.push({
-        title: title,
-        link: link
-      });
-    });
-
-    var results = [];
-
-    for(var i = 75; i < 81; i++){
-      results.push(initialResults[i]);
-    }
-    results.forEach(function(num){
-      console.log(num.title);
-      console.log(num.link);
+// get all articles from db
+app.get("/articles", function (req, res) {
+  db.Article.find({})
+    .then(function (dbArticle) {
+      res.json(dbArticle);
+      console.log(dbArticle);
     })
-    // Log the results once you've looped through each of the elements found with cheerio
-    // console.log("\n\------------" + results);
-  })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
+
+// specific article route
+app.get("/articles/:id", function (req, res) {
+  db.Article.findOne({
+      _id: req.params.id
+    })
+    .populate("note")
+    .then(function (dbArticle) {
+      res.json(dbArticle);
+      console.log(dbArticle);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
+
+// Route for saving/updating an article's comments
+app.post("/articles/:id", function (req, res) {
+  db.Comments.create(req.body)
+    .then(function (dbNote) {
+      return db.Article.findOneAndUpdate({
+        _id: req.params.id
+      }, {
+        note: dbNote._id
+      }, {
+        new: true
+      });
+    })
+    .then(function (dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
 
 app.listen(PORT, function () {
   console.log("Listening on PORT: " + PORT);
