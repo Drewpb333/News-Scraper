@@ -1,2 +1,3 @@
-# News-Scraper
-App that presents news from various sources and allows for comments
+# Sports-News Scraper
+
+An app that scrapes the top headlines from ESPN.COM
