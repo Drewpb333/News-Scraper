@@ -26,6 +26,10 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public"));
 
+app.get("/", function(req, res){
+  res.sendFile("./public/index.html");
+})
+
 //retrieves info from ESPN
 app.get("/scrape", function (req, res) {
   axios.get("http://espn.com/").then(function (response) {
