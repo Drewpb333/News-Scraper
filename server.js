@@ -26,9 +26,18 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public"));
 
-app.get("/", function(req, res){
-  res.sendFile("./public/index.html");
-})
+// Route for getting all Articles from the db
+app.get("/", function(req, res) {
+  db.Article.find({saved: false})
+    .then(function(dbArticle) {
+      res.render("articles", {
+        articles: dbArticle});
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
 
 //retrieves info from ESPN
 app.get("/scrape", function (req, res) {

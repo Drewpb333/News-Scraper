@@ -18,10 +18,10 @@
          type: String,
      },
 
-    //  for linking to comments model
+    //  for linking to notes model
      note: {
          type: Schema.Types.ObjectId,
-         ref: "Note"
+         ref: "Notes"
      }
  });
 

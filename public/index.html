@@ -9,20 +9,24 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
     <style>
-        /* html {
+        html {
             width: 100%;
         }
 
         body {
             max-width: 100%;
-        } */
+        }
 
-        #header {
+        #text-header {
             padding: 20px;
             padding-bottom: 20px;
             background-color: #3AAFA9;
             color: #FEFFFf;
             text-align: center;
+        }
+
+        #header {
+            align-content: center;
         }
 
         /* img {
@@ -31,9 +35,11 @@
             width: auto;
         } */
 
+
         #articles {
             margin-top: 60px;
             text-align: center;
+            color: #3AAFA9;
         }
 
         #scrape-btn {
@@ -46,14 +52,22 @@
 
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12" id="header">
+        <div class="row" id="header">
+            <div class="col-sm-12" id="text-header">
                 <h1>Sports-News Scraper:</h1>
                 <h4>Headlines from ESPN</h4>
             </div>
-            <img src="https://static01.nyt.com/images/2018/02/04/sports/football/SUPERLIVE-bount3/superbowl-ben-solomon-157-superJumbo.jpg"
-                class="img-responsive" alt="Sports Photo">
         </div>
+        <!-- <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8"> -->
+        <div id="image-header"></div>
+            <img src="https://static01.nyt.com/images/2018/02/04/sports/football/SUPERLIVE-bount3/superbowl-ben-solomon-157-superJumbo.jpg"
+                class="img-responsive" alt="Sports Photo" style="width: 100%">
+        </div>
+            <!-- </div>
+            <div class="col-sm-2"></div>
+        </div> -->
         <br>
         <button class="btn btn-info" id="scrape-btn">Scrape New Articles</button>
         <div id="articles">
@@ -66,8 +80,7 @@
         $.getJSON("/articles", function (data) {
             //retrieve data stored in an array
             for (var i = 0; i < data.length; i++) {
-                $("#articles").prepend("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link +
-                    "</p>");
+                $("#articles").prepend("<p data-id=" + data[i]._id + "'>" + data[i].title + "<br><a href=" + data[i].link + "'>" + data[i].link + "</a></p>");
             }
         })
 
@@ -78,6 +91,7 @@
                 for (var i = 0; i < data.length; i++) {
                     $("#articles").prepend("<p data-id='" + data[i]._id + "'>" + data[i].title +
                         "<br />" + data[i].link + "</p>");
+                    $("#articles")
                 }
             })
         })
