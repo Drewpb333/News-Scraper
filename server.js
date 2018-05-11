@@ -6,7 +6,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 // require Articles and Comments Models
-var db = require("../models");
+var db = require("./models");
 
 var app = express();
 
